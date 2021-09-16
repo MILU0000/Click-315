@@ -7,10 +7,10 @@ from datetime import datetime
 import pytz
 import requests
 
-userid = os.getenv("userid")
-password = os.getenv("password")
-push_token = os.getenv("push")
-url_range = os.getenv("range").split('-', 1)
+userid = os.getenv("USERID")
+password = os.getenv("PASSWORD")
+push_token = os.getenv("PUSH")
+url_range = os.getenv("RANGE").split('-', 1)
 req = requests.Session()
 log = []
 doc_url = [
