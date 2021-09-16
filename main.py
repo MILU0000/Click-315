@@ -306,11 +306,6 @@ def start_request():
 
 
 if __name__ == '__main__':
-    start_aft = random.randint(0, 1800)
-    log.append(get_time() + "Start \"Click 315\" after " + str(start_aft) + " second")
-    print(get_time() + "Start \"Click 315\" after " + str(start_aft) + " second")
-    time.sleep(start_aft)
-
     if login(get_nonce()):
         start_request()
     else:
