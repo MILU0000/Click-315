@@ -248,7 +248,7 @@ def push_message(log_list):
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
     # Push Plus Plus
-    else:
+    elif len(push_token) == 32:
         url = 'http://www.pushplus.plus/send'
         data = {
             "token": push_token,
@@ -259,17 +259,15 @@ def push_message(log_list):
         headers = {'Content-Type': 'application/json'}
         body = json.dumps(data).encode(encoding='utf-8')
 
+    else:
+        print("No logs sent: check push token")
+        return
+
     result = requests.post(url, data=body, headers=headers)
 
-    if result.status_code == 200:
-        text = json.loads(result.text)
-        if text["code"] == 200:
-            print(get_time() + "Push message successful")
-        elif text["code"] == 0:
-            print(get_time() + "Push message successful")
-        else:
-            print(get_time() + "Push message failed." + " Message: " + result.text)
-
+    text = json.loads(result.text)
+    if text["code"] == 200 or text["code"] == 0:
+        print(get_time() + "Push message successful")
     else:
         print(get_time() + "Push message failed." + " Message: " + result.text)
 
@@ -314,3 +312,5 @@ if __name__ == '__main__':
 
     if push_token is not None:
         push_message(log)
+    else:
+        print("No logs sent: No push token")
