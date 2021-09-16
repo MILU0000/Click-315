@@ -281,7 +281,7 @@ def start_request():
     print(get_time() + "Click url " + url_range[0] + " to " + url_range[1])
 
     for i in range(int(url_range[0]) - 1, int(url_range[1])):
-        sleep = random.randint(30, 180)
+        sleep = random.randint(30, 60)
         log.append(get_time() + "sleep " + str(sleep) + " second")
         print(get_time() + "sleep " + str(sleep) + " second")
         time.sleep(sleep)
