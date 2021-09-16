@@ -234,18 +234,18 @@ def request_doc(url):
 def push_message(log_list):
     content = ""
     for i in log_list:
-        content += i + " <br/>"
+        content += i + "  \n"
 
     title = 'Click 315'
 
-    # ServerChanServerChan
-    if push_token[0:2] == "SCT":
+    # ServerChan
+    if push_token[0:3] == "SCT":
         url = 'https://sctapi.ftqq.com/' + push_token + '.send'
-        data = {
+        body = {
             "title": title,
             "desp": content
         }
-        headers = {'application/x-www-form-urlencoded'}
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
     # Push Plus Plus
     else:
@@ -253,16 +253,25 @@ def push_message(log_list):
         data = {
             "token": push_token,
             "title": title,
-            "content": content
+            "content": content,
+            "template": "markdown"
         }
         headers = {'Content-Type': 'application/json'}
+        body = json.dumps(data).encode(encoding='utf-8')
 
-    body = json.dumps(data).encode(encoding='utf-8')
     result = requests.post(url, data=body, headers=headers)
+
     if result.status_code == 200:
-        print(get_time() + "Push message successful")
+        text = json.loads(result.text)
+        if text["code"] == 200:
+            print(get_time() + "Push message successful")
+        elif text["code"] == 0:
+            print(get_time() + "Push message successful")
+        else:
+            print(get_time() + "Push message failed." + " Message: " + result.text)
+
     else:
-        print(get_time() + "Push message failed." + "msg: " + result.text)
+        print(get_time() + "Push message failed." + " Message: " + result.text)
 
 
 def start_request():
@@ -272,7 +281,7 @@ def start_request():
     print(get_time() + "Click url " + url_range[0] + " to " + url_range[1])
 
     for i in range(int(url_range[0]) - 1, int(url_range[1])):
-        sleep = random.randint(0, 60)
+        sleep = random.randint(30, 180)
         log.append(get_time() + "sleep " + str(sleep) + " second")
         print(get_time() + "sleep " + str(sleep) + " second")
         time.sleep(sleep)
@@ -297,7 +306,7 @@ def start_request():
 
 
 if __name__ == '__main__':
-    start_aft = random.randint(0, 10800)
+    start_aft = random.randint(0, 1800)
     log.append(get_time() + "Start \"Click 315\" after " + str(start_aft) + " second")
     print(get_time() + "Start \"Click 315\" after " + str(start_aft) + " second")
     time.sleep(start_aft)
