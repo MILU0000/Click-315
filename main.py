@@ -7,6 +7,7 @@ from datetime import datetime
 import pytz
 import requests
 
+times = 2
 userid = os.getenv("USERID")
 password = os.getenv("PASSWORD")
 push_token = os.getenv("PUSH")
@@ -305,7 +306,14 @@ def start_request():
 
 if __name__ == '__main__':
     if login(get_nonce()):
-        start_request()
+        log.append("run " + str(times) + " times")
+        print("run " + str(times) + " times")
+        j = 1
+        while j <= times:
+            log.append("run " + str(j) + ":")
+            print("run " + str(j) + ":")
+            start_request()
+            j += 1
     else:
         log.append(get_time() + "Login Failed")
         print(get_time() + "Login Failed")
