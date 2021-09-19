@@ -261,7 +261,7 @@ def push_message(log_list):
         body = json.dumps(data).encode(encoding='utf-8')
 
     else:
-        print("No logs sent: push token invalid")
+        print("No logs sent: Push token invalid")
         return
 
     result = requests.post(url, data=body, headers=headers)
@@ -272,44 +272,46 @@ def push_message(log_list):
 def start_request():
     success = 0
     fail = 0
-    log.append(get_time() + "Click url " + url_range[0] + " to " + url_range[1])
-    print(get_time() + "Click url " + url_range[0] + " to " + url_range[1])
+    log.append("Click URL " + url_range[0] + " to " + url_range[1])
+    print("Click URL " + url_range[0] + " to " + url_range[1])
+    log.append("run " + str(times) + " times")
+    print("run " + str(times) + " times")
+    j = 1
+    while j <= times:
+        log.append("run " + str(j) + ":")
+        print("run " + str(j) + ":")
+        j += 1
+        for i in range(int(url_range[0]) - 1, int(url_range[1])):
+            sleep = random.randint(10, 50)
+            log.append(get_time() + "sleep " + str(sleep) + " second")
+            print(get_time() + "sleep " + str(sleep) + " second")
+            time.sleep(sleep)
 
-    for i in range(int(url_range[0]) - 1, int(url_range[1])):
-        sleep = random.randint(10, 50)
-        log.append(get_time() + "sleep " + str(sleep) + " second")
-        print(get_time() + "sleep " + str(sleep) + " second")
-        time.sleep(sleep)
-
-        log.append(get_time() + "Processing URL " + str(i + 1) + "...")
-        print(get_time() + "Processing URL " + str(i + 1) + "...")
-        try:
-            if request_doc(doc_url[i]):
-                success += 1
-            else:
-                log.append(get_time() + "ERROR URL: " + doc_url[i])
-                print(get_time() + "ERROR URL: " + doc_url[i])
+            log.append(get_time() + "Processing URL " + str(i + 1) + "...")
+            print(get_time() + "Processing URL " + str(i + 1) + "...")
+            try:
+                if request_doc(doc_url[i]):
+                    success += 1
+                else:
+                    log.append(get_time() + "ERROR URL: " + doc_url[i])
+                    print(get_time() + "ERROR URL: " + doc_url[i])
+                    fail += 1
+            except requests.exceptions.ConnectionError as e:
                 fail += 1
-        except requests.exceptions.ConnectionError as e:
-            fail += 1
-            log.append(get_time() + str(e))
-            log.append(get_time() + "ERROR URL: " + doc_url[i])
-            print(get_time() + str(e))
-            print(get_time() + "ERROR URL: " + doc_url[i])
+                log.append(get_time() + str(e))
+                log.append(get_time() + "ERROR URL: " + doc_url[i])
+                print(get_time() + str(e))
+                print(get_time() + "ERROR URL: " + doc_url[i])
+
+    log.append("--------------------")
+    print("--------------------")
     log.append(get_time() + "Total success: " + str(success) + ", failed: " + str(fail))
     print(get_time() + "Total success: " + str(success) + ", failed: " + str(fail))
 
 
 if __name__ == '__main__':
     if login(get_nonce()):
-        log.append("run " + str(times) + " times")
-        print("run " + str(times) + " times")
-        j = 1
-        while j <= times:
-            log.append("run " + str(j) + ":")
-            print("run " + str(j) + ":")
-            start_request()
-            j += 1
+        start_request()
     else:
         log.append(get_time() + "Login Failed")
         print(get_time() + "Login Failed")
