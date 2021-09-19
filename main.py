@@ -139,7 +139,7 @@ def get_mid_str(s, start_str, stop_str):
 
 def get_time():
     now = datetime.now(tz=pytz.timezone('US/Eastern'))
-    fmt = '%Y-%m-%d %H:%M:%S %Z: '
+    fmt = '%m-%d %H:%M:%S %Z: '
     return now.strftime(fmt)
 
 
