@@ -261,16 +261,12 @@ def push_message(log_list):
         body = json.dumps(data).encode(encoding='utf-8')
 
     else:
-        print("No logs sent: check push token")
+        print("No logs sent: push token invalid")
         return
 
     result = requests.post(url, data=body, headers=headers)
 
-    text = json.loads(result.text)
-    if text["code"] == 200 or text["code"] == 0:
-        print(get_time() + "Push message successful")
-    else:
-        print(get_time() + "Push message failed." + " Message: " + result.text)
+    print(get_time() + "Push message： " + result.text)
 
 
 def start_request():
@@ -280,7 +276,7 @@ def start_request():
     print(get_time() + "Click url " + url_range[0] + " to " + url_range[1])
 
     for i in range(int(url_range[0]) - 1, int(url_range[1])):
-        sleep = random.randint(30, 60)
+        sleep = random.randint(10, 50)
         log.append(get_time() + "sleep " + str(sleep) + " second")
         print(get_time() + "sleep " + str(sleep) + " second")
         time.sleep(sleep)
