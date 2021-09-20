@@ -303,7 +303,7 @@ def start_request():
                 print(get_time() + str(e))
                 print(get_time() + "ERROR URL: " + doc_url[i])
 
-    log.append("--------------------")
+    log.append("***")
     print("--------------------")
     log.append(get_time() + "Total success: " + str(success) + ", failed: " + str(fail))
     print(get_time() + "Total success: " + str(success) + ", failed: " + str(fail))
