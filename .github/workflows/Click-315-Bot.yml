@@ -1,7 +1,7 @@
 name: 'Click 315 Bot'
 
 on:
-  #workflow_dispatch:
+  workflow_dispatch:
   #push:
     #branches: 
       #- master
