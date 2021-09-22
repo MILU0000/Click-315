@@ -282,9 +282,9 @@ def start_request():
         print("run " + str(j) + ":")
         j += 1
         for i in range(int(url_range[0]) - 1, int(url_range[1])):
-            sleep = random.randint(10, 50)
-            log.append(get_time() + "sleep " + str(sleep) + " second")
-            print(get_time() + "sleep " + str(sleep) + " second")
+            sleep = random.randint(5, 30)
+            log.append("sleep " + str(sleep) + " second")
+            print("sleep " + str(sleep) + " second")
             time.sleep(sleep)
 
             log.append(get_time() + "Processing URL " + str(i + 1) + "...")
